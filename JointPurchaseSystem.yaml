@@ -16,7 +16,45 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Circle'
+                  title: Circle
+                  type: object
+                  description: サークル情報取得用モデル
+                  properties:
+                    circle_id:
+                      type: integer
+                      description: サークルID
+                    artist_name:
+                      type: string
+                      description: 作家名
+                    circle_name:
+                      type: string
+                      description: サークル名
+                    day:
+                      type: string
+                      description: 開催日（N日目のN）
+                    hole:
+                      type: string
+                      description: 開催ホール
+                    block:
+                      type: string
+                      description: ブロック
+                    space_num:
+                      type: integer
+                      description: スペースナンバー
+                    desk:
+                      type: string
+                      description: 机
+                    group_id:
+                      type: integer
+                  required:
+                    - circle_id
+                    - artist_name
+                    - circle_name
+                    - day
+                    - hole
+                    - block
+                    - space_num
+                    - desk
         '400':
           description: Bad Request
         '401':
@@ -60,10 +98,95 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AddCircle'
+              title: AddCircle
+              type: object
+              description: サークル情報登録用モデル
+              properties:
+                circle_name:
+                  type: string
+                  description: サークル名
+                artist_name:
+                  type: string
+                  description: 作家名
+                day:
+                  type: string
+                  description: 日付
+                hole:
+                  type: string
+                  description: ホール
+                block:
+                  type: string
+                  description: ブロック
+                space_num:
+                  type: integer
+                  description: スペース番号
+                desk:
+                  type: string
+                  description: 机
+                  pattern: '^[a-b]$'
+                amount:
+                  type: integer
+                  description: 在庫
+                group_id:
+                  type: integer
+                  description: グループID
+              required:
+                - circle_name
+                - artist_name
+                - day
+                - hole
+                - block
+                - space_num
+                - desk
+                - amount
+                - group_id
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/AddCircle'
+              title: AddCircle
+              x-stoplight:
+                id: i5ytulhctqec3
+              type: object
+              x-examples: {}
+              description: サークル情報登録用モデル
+              properties:
+                circle_name:
+                  type: string
+                  description: サークル名
+                artist_name:
+                  type: string
+                  description: 作家名
+                day:
+                  type: string
+                  description: 日付
+                hole:
+                  type: string
+                  description: ホール
+                block:
+                  type: string
+                  description: ブロック
+                space_num:
+                  type: integer
+                  description: スペース番号
+                desk:
+                  type: string
+                  description: 机
+                  pattern: '^[a-b]$'
+                amount:
+                  type: integer
+                  description: 在庫
+                group_id:
+                  type: integer
+                  description: グループID
+              required:
+                - circle_name
+                - artist_name
+                - day
+                - hole
+                - block
+                - space_num
+                - desk
+                - amount
+                - group_id
         description: 登録に必要な情報
       tags:
         - サークル情報
@@ -84,7 +207,48 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Circle'
+                title: Circle
+                x-stoplight:
+                  id: baocaujh0tuex
+                type: object
+                x-examples: {}
+                description: サークル情報取得用モデル
+                properties:
+                  circle_id:
+                    type: integer
+                    description: サークルID
+                  artist_name:
+                    type: string
+                    description: 作家名
+                  circle_name:
+                    type: string
+                    description: サークル名
+                  day:
+                    type: string
+                    description: 開催日（N日目のN）
+                  hole:
+                    type: string
+                    description: 開催ホール
+                  block:
+                    type: string
+                    description: ブロック
+                  space_num:
+                    type: integer
+                    description: スペースナンバー
+                  desk:
+                    type: string
+                    description: 机
+                  group_id:
+                    type: integer
+                required:
+                  - circle_id
+                  - artist_name
+                  - circle_name
+                  - day
+                  - hole
+                  - block
+                  - space_num
+                  - desk
         '400':
           description: Bad Request
         '401':
@@ -110,10 +274,98 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AddCircle'
+              title: AddCircle
+              x-stoplight:
+                id: i5ytulhctqec3
+              type: object
+              x-examples: {}
+              description: サークル情報登録用モデル
+              properties:
+                circle_name:
+                  type: string
+                  description: サークル名
+                artist_name:
+                  type: string
+                  description: 作家名
+                day:
+                  type: string
+                  description: 日付
+                hole:
+                  type: string
+                  description: ホール
+                block:
+                  type: string
+                  description: ブロック
+                space_num:
+                  type: integer
+                  description: スペース番号
+                desk:
+                  type: string
+                  description: 机
+                  pattern: '^[a-b]$'
+                amount:
+                  type: integer
+                  description: 在庫
+                group_id:
+                  type: integer
+                  description: グループID
+              required:
+                - circle_name
+                - artist_name
+                - day
+                - hole
+                - block
+                - space_num
+                - desk
+                - amount
+                - group_id
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/AddCircle'
+              title: AddCircle
+              x-stoplight:
+                id: i5ytulhctqec3
+              type: object
+              x-examples: {}
+              description: サークル情報登録用モデル
+              properties:
+                circle_name:
+                  type: string
+                  description: サークル名
+                artist_name:
+                  type: string
+                  description: 作家名
+                day:
+                  type: string
+                  description: 日付
+                hole:
+                  type: string
+                  description: ホール
+                block:
+                  type: string
+                  description: ブロック
+                space_num:
+                  type: integer
+                  description: スペース番号
+                desk:
+                  type: string
+                  description: 机
+                  pattern: '^[a-b]$'
+                amount:
+                  type: integer
+                  description: 在庫
+                group_id:
+                  type: integer
+                  description: グループID
+              required:
+                - circle_name
+                - artist_name
+                - day
+                - hole
+                - block
+                - space_num
+                - desk
+                - amount
+                - group_id
         description: 更新するサークル情報
       tags:
         - サークル情報
@@ -136,7 +388,55 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Product'
+                  title: Product
+                  type: object
+                  description: 商品情報取得用モデル
+                  properties:
+                    product_id:
+                      type: integer
+                      description: 商品ID
+                    circle_id:
+                      type: number
+                      description: サークルID サークルと紐づく
+                    product_name:
+                      type: string
+                      description: 商品名
+                    price:
+                      type: integer
+                      description: 値段
+                    deadline:
+                      type: string
+                      format: date-time
+                      description: 締切日
+                    lock_status:
+                      type: boolean
+                      description: ロック状態
+                    lock_status_id:
+                      type: integer
+                      description: ロック状態の種別 別途マスタ定義あり
+                    commission_type:
+                      type: integer
+                      description: 手数料種別
+                    commission:
+                      type: integer
+                      description: 手数料
+                    amount:
+                      type: integer
+                      description: 在庫
+                    group_id:
+                      type: integer
+                  required:
+                    - product_id
+                    - circle_id
+                    - product_name
+                    - price
+                    - deadline
+                    - lock_status
+                    - lock_status_id
+                    - commission_type
+                    - commission
+                    - amount
+                    - group_id
         '400':
           description: Bad Request
         '401':
@@ -165,15 +465,81 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AddProduct'
+              title: AddProduct
+              type: object
+              description: 商品情報登録用モデル
+              properties:
+                product_name:
+                  type: string
+                  description: 商品名
+                price:
+                  type: string
+                  description: 金額
+                deadline:
+                  type: string
+                  format: date-time
+                  description: 締切日
+                commission_type:
+                  type: integer
+                  description: 手数料種別
+                commission:
+                  type: integer
+                  description: 手数料
+                amount:
+                  type: integer
+                  description: 在庫数
+                group_id:
+                  type: integer
+                  description: グループID
+              required:
+                - product_name
+                - price
+                - deadline
+                - commission_type
+                - commission
+                - amount
+                - group_id
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/AddProduct'
+              title: AddProduct
+              x-stoplight:
+                id: wcblino9n2fxl
+              type: object
+              description: 商品情報登録用モデル
+              properties:
+                product_name:
+                  type: string
+                  description: 商品名
+                price:
+                  type: string
+                  description: 金額
+                deadline:
+                  type: string
+                  format: date-time
+                  description: 締切日
+                commission_type:
+                  type: integer
+                  description: 手数料種別
+                commission:
+                  type: integer
+                  description: 手数料
+                amount:
+                  type: integer
+                  description: 在庫数
+                group_id:
+                  type: integer
+                  description: グループID
+              required:
+                - product_name
+                - price
+                - deadline
+                - commission_type
+                - commission
+                - amount
+                - group_id
   /users:
     get:
       summary: ユーザー情報を取得する
-      tags:
-        - User
       responses:
         '200':
           description: OK
@@ -182,7 +548,25 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  title: User
+                  type: object
+                  description: ユーザー情報取得用モデル
+                  properties:
+                    user_id:
+                      type: integer
+                      description: ユーザーID
+                    user_name:
+                      type: string
+                      description: ユーザー名
+                    groups:
+                      type: array
+                      description: ユーザーが所属しているグループIDの一覧
+                      items:
+                        type: integer
+                  required:
+                    - user_id
+                    - user_name
+                    - groups
         '400':
           description: Bad Request
         '401':
@@ -202,6 +586,8 @@ paths:
           name: user_email
           description: ユーザーEmailアドレスでの部分一致を行うクエリ
       description: ユーザー情報を取得する
+      tags:
+        - ユーザー情報
     post:
       summary: ユーザー情報を登録する
       operationId: post-user
@@ -231,6 +617,8 @@ paths:
                 - user_name
                 - added_user_id
         description: ''
+      tags:
+        - ユーザー情報
     parameters: []
   '/users/{user_id}':
     parameters:
@@ -241,14 +629,35 @@ paths:
         required: true
     get:
       summary: ユーザーIDに該当するユーザー情報を取得する
-      tags: []
+      tags:
+        - ユーザー情報
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                title: User
+                x-stoplight:
+                  id: 00s9trz5jjlqd
+                type: object
+                description: ユーザー情報取得用モデル
+                properties:
+                  user_id:
+                    type: integer
+                    description: ユーザーID
+                  user_name:
+                    type: string
+                    description: ユーザー名
+                  groups:
+                    type: array
+                    description: ユーザーが所属しているグループIDの一覧
+                    items:
+                      type: integer
+                required:
+                  - user_id
+                  - user_name
+                  - groups
         '400':
           description: Bad Request
         '401':
@@ -269,6 +678,8 @@ paths:
           description: Unauthorized
         '404':
           description: Not Found
+      tags:
+        - ユーザー情報
   '/users/{user_id}/orders':
     parameters:
       - schema:
@@ -278,7 +689,9 @@ paths:
         required: true
     get:
       summary: ユーザーIDに該当する注文情報を取得する
-      tags: []
+      tags:
+        - オーダー情報
+        - ユーザー情報
       responses:
         '200':
           description: OK
@@ -315,6 +728,9 @@ paths:
           description: Unauthorized
         '404':
           description: Not Found
+      tags:
+        - オーダー情報
+        - ユーザー情報
   '/orders/{order_id}':
     parameters:
       - schema:
@@ -324,7 +740,8 @@ paths:
         required: true
     get:
       summary: 注文IDに該当する注文情報を取得する
-      tags: []
+      tags:
+        - オーダー情報
       responses:
         '200':
           description: OK
@@ -375,6 +792,8 @@ paths:
                 - order_id
                 - order_quantity
         description: ''
+      tags:
+        - オーダー情報
   /login:
     get:
       summary: ログイン時のユーザー情報取得
@@ -385,7 +804,27 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                title: User
+                x-stoplight:
+                  id: 00s9trz5jjlqd
+                type: object
+                description: ユーザー情報取得用モデル
+                properties:
+                  user_id:
+                    type: integer
+                    description: ユーザーID
+                  user_name:
+                    type: string
+                    description: ユーザー名
+                  groups:
+                    type: array
+                    description: ユーザーが所属しているグループIDの一覧
+                    items:
+                      type: integer
+                required:
+                  - user_id
+                  - user_name
+                  - groups
         '400':
           description: Bad Request
         '401':
@@ -402,10 +841,13 @@ paths:
           name: email
           description: ログインユーザーのemailアドレス
           required: true
+      tags:
+        - ログイン情報
   /products:
     get:
       summary: 商品情報を取得する
-      tags: []
+      tags:
+        - 商品情報
       responses:
         '200':
           description: OK
@@ -423,6 +865,8 @@ paths:
       responses:
         '200':
           description: OK
+      tags:
+        - 商品情報
   '/products/{product_id}':
     parameters:
       - schema:
@@ -432,7 +876,8 @@ paths:
         required: true
     get:
       summary: 商品IDに該当する商品情報を取得する
-      tags: []
+      tags:
+        - 商品情報
       responses:
         '200':
           description: OK
@@ -449,6 +894,8 @@ paths:
       responses:
         '200':
           description: OK
+      tags:
+        - 商品情報
   '/products/{product_id}/orders':
     parameters:
       - schema:
@@ -458,7 +905,9 @@ paths:
         required: true
     get:
       summary: 商品IDが該当する注文情報を取得する
-      tags: []
+      tags:
+        - 商品情報
+        - オーダー情報
       responses:
         '200':
           description: OK
@@ -475,11 +924,17 @@ paths:
       responses:
         '200':
           description: OK
+      tags:
+        - 商品情報
+        - オーダー情報
 components:
   schemas:
     Circle:
       title: Circle
+      x-stoplight:
+        id: baocaujh0tuex
       type: object
+      x-examples: {}
       description: サークル情報取得用モデル
       properties:
         circle_id:
@@ -519,7 +974,14 @@ components:
         - desk
     Product:
       title: Product
+      x-stoplight:
+        id: 9pkwmd5sauomw
       type: object
+      x-examples:
+        example-1:
+          product_name: string
+          price: 0
+          deadline: '2019-08-24T14:15:22Z'
       description: 商品情報取得用モデル
       properties:
         product_id:
@@ -569,6 +1031,8 @@ components:
         - group_id
     User:
       title: User
+      x-stoplight:
+        id: 00s9trz5jjlqd
       type: object
       description: ユーザー情報取得用モデル
       properties:
@@ -589,7 +1053,10 @@ components:
         - groups
     AddCircle:
       title: AddCircle
+      x-stoplight:
+        id: i5ytulhctqec3
       type: object
+      x-examples: {}
       description: サークル情報登録用モデル
       properties:
         circle_name:
@@ -632,6 +1099,8 @@ components:
         - group_id
     AddProduct:
       title: AddProduct
+      x-stoplight:
+        id: wcblino9n2fxl
       type: object
       description: 商品情報登録用モデル
       properties:
