@@ -523,7 +523,6 @@ paths:
         '404':
           description: Not Found
       tags:
-        - ユーザー情報
         - 注文情報
   '/orders/{order_id}':
     parameters:
