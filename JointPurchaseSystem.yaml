@@ -1,0 +1,356 @@
+openapi: 3.0.0
+x-stoplight:
+  id: loys4402j96bd
+info:
+  title: JointPurchaseSystem
+  version: '1.0'
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /circles:
+    get:
+      summary: サークル情報を取得する
+      tags:
+        - サークル情報
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Circle'
+        '404':
+          description: Not Found
+      operationId: get-circles
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: circlename
+          description: サークル名の部分一致を行うクエリ
+        - schema:
+            type: string
+          in: query
+          name: sortedby
+          description: ソートを行うパラメータを設定するクエリ
+      description: |-
+        サークル情報をすべて取得する
+
+        クエリーに応じて、情報の取捨を行う
+        '/circles?circlename=ながれぼし'であれば「ながれぼし」を含むサークルを取得する
+        '/circles?sortedby=circle_name'であればサークル名がソートされた状態で取得する
+    post:
+      summary: サークル情報を登録する
+      operationId: post-circles
+      responses:
+        '200':
+          description: OK
+        '403':
+          description: Forbidden
+      description: |-
+        サークル情報を登録する
+        フォーム要素、Jsonそれぞれ登録できる
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddCircle'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AddCircle'
+        description: 登録に必要な情報
+  '/circles/{circle_id}':
+    parameters:
+      - schema:
+          type: string
+        name: circle_id
+        in: path
+        required: true
+    get:
+      summary: サークルIDに該当するサークル情報を取得する
+      tags:
+        - サークル情報
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Circle'
+        '404':
+          description: Not Found
+      operationId: get-circle_id-circles
+      description: クエリパラメータのサークルIDに該当するサークルの情報を取得する
+    put:
+      summary: サークルIDに該当するサークル情報を更新する
+      operationId: put-circle_id-circles
+      responses:
+        '200':
+          description: OK
+        '403':
+          description: Forbidden
+      description: クエリパラメータのサークルIDに該当するサークル情報を更新する
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddCircle'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AddCircle'
+        description: 更新するサークル情報
+  '/circles/{circle_id}/products':
+    parameters:
+      - schema:
+          type: string
+        name: circle_id
+        in: path
+        required: true
+    get:
+      summary: サークルIDに該当する商品情報を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        '404':
+          description: Not Found
+      operationId: get-circles-products
+      description: クエリパラメータのサークルIDに合致するサークルの商品情報を取得する
+      parameters: []
+    post:
+      summary: 商品情報を登録する
+      operationId: post-circles-products
+      responses:
+        '200':
+          description: OK
+  /users:
+    get:
+      summary: ユーザー情報を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+      operationId: get-user
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: user_name
+          description: ユーザー名の部分一致を行うクエリ
+        - schema:
+            type: string
+          in: query
+          name: user_email
+          description: ユーザーEmailアドレスでの部分一致を行うクエリ
+    post:
+      summary: ユーザー情報を登録する
+      operationId: post-user
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+      parameters: []
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_name:
+                  type: string
+        description: ''
+    parameters: []
+  '/users/{user_id}':
+    parameters:
+      - schema:
+          type: string
+        name: user_id
+        in: path
+        required: true
+    get:
+      summary: ユーザーIDに該当するユーザー情報を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+      operationId: get-users-user_id
+    put:
+      summary: ユーザIDに該当する情報を更新する
+      operationId: put-users-user_id
+      responses:
+        '200':
+          description: OK
+  '/users/{user_id}/orders':
+    parameters:
+      - schema:
+          type: string
+        name: user_id
+        in: path
+        required: true
+    get:
+      summary: ユーザーIDに該当する注文情報を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+      operationId: get-users-user_id-products
+    post:
+      summary: 注文情報を登録する
+      operationId: post-users-user_id-orders
+      responses:
+        '200':
+          description: OK
+  '/orders/{order_id}':
+    parameters:
+      - schema:
+          type: string
+        name: order_id
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+      operationId: get-orders-order_id
+    put:
+      summary: ''
+      operationId: put-orders-order_id
+      responses:
+        '200':
+          description: OK
+components:
+  schemas:
+    Circle:
+      title: Circle
+      x-stoplight:
+        id: baocaujh0tuex
+      type: object
+      x-examples: {}
+      properties:
+        circle_id:
+          type: integer
+        artist_name:
+          type: string
+        circle_name:
+          type: string
+        day:
+          type: string
+        hole:
+          type: string
+        block:
+          type: string
+        space_num:
+          type: integer
+        desk:
+          type: string
+      required:
+        - circle_id
+        - artist_name
+        - circle_name
+        - day
+        - hole
+        - block
+        - space_num
+        - desk
+    Product:
+      title: Product
+      x-stoplight:
+        id: 9pkwmd5sauomw
+      type: object
+      x-examples:
+        example-1:
+          product_name: string
+          price: 0
+          deadline: '2019-08-24T14:15:22Z'
+      properties:
+        product_name:
+          type: string
+        price:
+          type: integer
+        deadline:
+          type: string
+          format: date-time
+        product_id:
+          type: integer
+        group_id:
+          type: integer
+        circle_id:
+          type: number
+        lock_status:
+          type: integer
+        commission_type:
+          type: integer
+        commission:
+          type: integer
+      required:
+        - product_name
+        - price
+        - deadline
+        - product_id
+        - group_id
+        - circle_id
+        - lock_status
+        - commission_type
+        - commission
+    User:
+      title: User
+      x-stoplight:
+        id: 00s9trz5jjlqd
+      type: object
+      properties:
+        user_id:
+          type: integer
+        user_name:
+          type: string
+        groups:
+          type: string
+      required:
+        - user_id
+        - user_name
+        - groups
+    AddCircle:
+      title: AddCircle
+      x-stoplight:
+        id: i5ytulhctqec3
+      type: object
+      properties:
+        circle_name:
+          type: string
+        artist_name:
+          type: string
+        day:
+          type: string
+        hole:
+          type: string
+        block:
+          type: string
+        space_num:
+          type: integer
+        desk:
+          type: string
+      required:
+        - circle_name
+        - artist_name
+        - day
+        - hole
+        - block
+        - space_num
+        - desk
+  requestBodies: {}
+  responses: {}
+  parameters: {}
+  securitySchemes: {}
