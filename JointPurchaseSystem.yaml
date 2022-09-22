@@ -1,4 +1,6 @@
 openapi: 3.0.0
+x-stoplight:
+  id: loys4402j96bd
 info:
   title: JointPurchaseSystem
   version: '1.0'
@@ -17,7 +19,10 @@ paths:
                 type: array
                 items:
                   title: Circle
+                  x-stoplight:
+                    id: baocaujh0tuex
                   type: object
+                  x-examples: {}
                   description: サークル情報取得用モデル
                   properties:
                     circle_id:
@@ -81,115 +86,6 @@ paths:
         '/circles?sortedby=circle_name'であればサークル名がソートされた状態で取得する
       tags:
         - サークル情報
-    post:
-      summary: サークル情報を登録する
-      operationId: post-circles
-      responses:
-        '201':
-          description: Created
-        '401':
-          description: Unauthorized
-        '404':
-          description: Not Found
-      description: |-
-        サークル情報を登録する
-        フォーム要素、Jsonそれぞれ登録できる
-      requestBody:
-        content:
-          application/json:
-            schema:
-              title: AddCircle
-              type: object
-              description: サークル情報登録用モデル
-              properties:
-                circle_name:
-                  type: string
-                  description: サークル名
-                artist_name:
-                  type: string
-                  description: 作家名
-                day:
-                  type: string
-                  description: 日付
-                hole:
-                  type: string
-                  description: ホール
-                block:
-                  type: string
-                  description: ブロック
-                space_num:
-                  type: integer
-                  description: スペース番号
-                desk:
-                  type: string
-                  description: 机
-                  pattern: '^[a-b]$'
-                amount:
-                  type: integer
-                  description: 在庫
-                group_id:
-                  type: integer
-                  description: グループID
-              required:
-                - circle_name
-                - artist_name
-                - day
-                - hole
-                - block
-                - space_num
-                - desk
-                - amount
-                - group_id
-          application/x-www-form-urlencoded:
-            schema:
-              title: AddCircle
-              x-stoplight:
-                id: i5ytulhctqec3
-              type: object
-              x-examples: {}
-              description: サークル情報登録用モデル
-              properties:
-                circle_name:
-                  type: string
-                  description: サークル名
-                artist_name:
-                  type: string
-                  description: 作家名
-                day:
-                  type: string
-                  description: 日付
-                hole:
-                  type: string
-                  description: ホール
-                block:
-                  type: string
-                  description: ブロック
-                space_num:
-                  type: integer
-                  description: スペース番号
-                desk:
-                  type: string
-                  description: 机
-                  pattern: '^[a-b]$'
-                amount:
-                  type: integer
-                  description: 在庫
-                group_id:
-                  type: integer
-                  description: グループID
-              required:
-                - circle_name
-                - artist_name
-                - day
-                - hole
-                - block
-                - space_num
-                - desk
-                - amount
-                - group_id
-        description: 登録に必要な情報
-      tags:
-        - サークル情報
   '/circles/{circle_id}':
     parameters:
       - schema:
@@ -199,8 +95,6 @@ paths:
         required: true
     get:
       summary: サークルIDに該当するサークル情報を取得する
-      tags:
-        - サークル情報
       responses:
         '200':
           description: OK
@@ -257,116 +151,6 @@ paths:
           description: Not Found
       operationId: get-circle_id-circles
       description: クエリパラメータのサークルIDに該当するサークルの情報を取得する
-    put:
-      summary: サークルIDに該当するサークル情報を更新する
-      operationId: put-circle_id-circles
-      responses:
-        '201':
-          description: Created
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '404':
-          description: Not Found
-      description: クエリパラメータのサークルIDに該当するサークル情報を更新する
-      requestBody:
-        content:
-          application/json:
-            schema:
-              title: AddCircle
-              x-stoplight:
-                id: i5ytulhctqec3
-              type: object
-              x-examples: {}
-              description: サークル情報登録用モデル
-              properties:
-                circle_name:
-                  type: string
-                  description: サークル名
-                artist_name:
-                  type: string
-                  description: 作家名
-                day:
-                  type: string
-                  description: 日付
-                hole:
-                  type: string
-                  description: ホール
-                block:
-                  type: string
-                  description: ブロック
-                space_num:
-                  type: integer
-                  description: スペース番号
-                desk:
-                  type: string
-                  description: 机
-                  pattern: '^[a-b]$'
-                amount:
-                  type: integer
-                  description: 在庫
-                group_id:
-                  type: integer
-                  description: グループID
-              required:
-                - circle_name
-                - artist_name
-                - day
-                - hole
-                - block
-                - space_num
-                - desk
-                - amount
-                - group_id
-          application/x-www-form-urlencoded:
-            schema:
-              title: AddCircle
-              x-stoplight:
-                id: i5ytulhctqec3
-              type: object
-              x-examples: {}
-              description: サークル情報登録用モデル
-              properties:
-                circle_name:
-                  type: string
-                  description: サークル名
-                artist_name:
-                  type: string
-                  description: 作家名
-                day:
-                  type: string
-                  description: 日付
-                hole:
-                  type: string
-                  description: ホール
-                block:
-                  type: string
-                  description: ブロック
-                space_num:
-                  type: integer
-                  description: スペース番号
-                desk:
-                  type: string
-                  description: 机
-                  pattern: '^[a-b]$'
-                amount:
-                  type: integer
-                  description: 在庫
-                group_id:
-                  type: integer
-                  description: グループID
-              required:
-                - circle_name
-                - artist_name
-                - day
-                - hole
-                - block
-                - space_num
-                - desk
-                - amount
-                - group_id
-        description: 更新するサークル情報
       tags:
         - サークル情報
   '/circles/{circle_id}/products':
@@ -378,8 +162,6 @@ paths:
         required: true
     get:
       summary: サークルIDに該当する商品情報を取得する
-      tags:
-        - サークル情報
       responses:
         '200':
           description: OK
@@ -389,7 +171,14 @@ paths:
                 type: array
                 items:
                   title: Product
+                  x-stoplight:
+                    id: 9pkwmd5sauomw
                   type: object
+                  x-examples:
+                    example-1:
+                      product_name: string
+                      price: 0
+                      deadline: '2019-08-24T14:15:22Z'
                   description: 商品情報取得用モデル
                   properties:
                     product_id:
@@ -446,6 +235,8 @@ paths:
       operationId: get-circles-products
       description: クエリパラメータのサークルIDに合致するサークルの商品情報を取得する
       parameters: []
+      tags:
+        - 商品情報
     post:
       summary: サークルの商品情報を登録する
       operationId: post-circles-products
@@ -458,14 +249,14 @@ paths:
           description: Unauthorized
         '404':
           description: Not Found
-      tags:
-        - サークル情報
       description: サークルの商品情報を登録する
       requestBody:
         content:
           application/json:
             schema:
               title: AddProduct
+              x-stoplight:
+                id: wcblino9n2fxl
               type: object
               description: 商品情報登録用モデル
               properties:
@@ -537,6 +328,8 @@ paths:
                 - commission
                 - amount
                 - group_id
+      tags:
+        - 商品情報
   /users:
     get:
       summary: ユーザー情報を取得する
@@ -549,6 +342,8 @@ paths:
                 type: array
                 items:
                   title: User
+                  x-stoplight:
+                    id: 00s9trz5jjlqd
                   type: object
                   description: ユーザー情報取得用モデル
                   properties:
@@ -629,8 +424,6 @@ paths:
         required: true
     get:
       summary: ユーザーIDに該当するユーザー情報を取得する
-      tags:
-        - ユーザー情報
       responses:
         '200':
           description: OK
@@ -666,6 +459,8 @@ paths:
           description: Not Found
       operationId: get-users-user_id
       description: ''
+      tags:
+        - ユーザー情報
     put:
       summary: ユーザIDに該当する情報を更新する
       operationId: put-users-user_id
@@ -689,9 +484,6 @@ paths:
         required: true
     get:
       summary: ユーザーIDに該当する注文情報を取得する
-      tags:
-        - オーダー情報
-        - ユーザー情報
       responses:
         '200':
           description: OK
@@ -716,6 +508,8 @@ paths:
         '404':
           description: Not Found
       operationId: get-users-user_id-products
+      tags:
+        - 注文情報
     post:
       summary: 注文情報を登録する
       operationId: post-users-user_id-orders
@@ -729,8 +523,8 @@ paths:
         '404':
           description: Not Found
       tags:
-        - オーダー情報
         - ユーザー情報
+        - 注文情報
   '/orders/{order_id}':
     parameters:
       - schema:
@@ -740,8 +534,6 @@ paths:
         required: true
     get:
       summary: 注文IDに該当する注文情報を取得する
-      tags:
-        - オーダー情報
       responses:
         '200':
           description: OK
@@ -765,6 +557,8 @@ paths:
           description: Not Found
       operationId: get-orders-order_id
       description: 注文IDに該当する注文情報を取得する
+      tags:
+        - 注文情報
     put:
       summary: 注文IDに該当する注文情報を更新する
       operationId: put-orders-order_id
@@ -793,7 +587,7 @@ paths:
                 - order_quantity
         description: ''
       tags:
-        - オーダー情報
+        - 注文情報
   /login:
     get:
       summary: ログイン時のユーザー情報取得
@@ -846,8 +640,6 @@ paths:
   /products:
     get:
       summary: 商品情報を取得する
-      tags:
-        - 商品情報
       responses:
         '200':
           description: OK
@@ -859,12 +651,15 @@ paths:
           description: Not Found
       operationId: get-products
       description: 取得できる商品情報を取得する
+      tags:
+        - 商品情報
     post:
       summary: 商品情報を登録する
       operationId: post-products
       responses:
         '200':
           description: OK
+      description: ''
       tags:
         - 商品情報
   '/products/{product_id}':
@@ -876,8 +671,6 @@ paths:
         required: true
     get:
       summary: 商品IDに該当する商品情報を取得する
-      tags:
-        - 商品情報
       responses:
         '200':
           description: OK
@@ -888,6 +681,8 @@ paths:
         '404':
           description: Not Found
       operationId: get-products-product_id
+      tags:
+        - 商品情報
     put:
       summary: 商品IDに該当する商品情報を取得する
       operationId: put-products-product_id
@@ -905,9 +700,6 @@ paths:
         required: true
     get:
       summary: 商品IDが該当する注文情報を取得する
-      tags:
-        - 商品情報
-        - オーダー情報
       responses:
         '200':
           description: OK
@@ -918,6 +710,8 @@ paths:
         '404':
           description: Not Found
       operationId: get-products-product_id-orders
+      tags:
+        - 注文情報
     post:
       summary: 商品IDが該当する商品情報を登録する
       operationId: post-products-product_id-orders
@@ -925,8 +719,7 @@ paths:
         '200':
           description: OK
       tags:
-        - 商品情報
-        - オーダー情報
+        - 注文情報
 components:
   schemas:
     Circle:
@@ -1136,6 +929,8 @@ components:
         - group_id
     GroupID:
       title: GroupId
+      x-stoplight:
+        id: eeea0isztm80z
       type: object
       properties:
         group_id:
