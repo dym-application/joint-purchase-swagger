@@ -1,1 +1,3 @@
-# sandbox
+# joint-purchase-swagger
+JointPurchaseSystemのSwagger用ファイル
+アプリで使用するために一旦Publicにしている
