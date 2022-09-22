@@ -1,6 +1,4 @@
 openapi: 3.0.0
-x-stoplight:
-  id: loys4402j96bd
 info:
   title: JointPurchaseSystem
   version: '1.0'
@@ -10,8 +8,6 @@ paths:
   /circles:
     get:
       summary: サークル情報を取得する
-      tags:
-        - サークル情報
       responses:
         '200':
           description: OK
@@ -21,6 +17,10 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Circle'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
         '404':
           description: Not Found
       operationId: get-circles
@@ -41,14 +41,18 @@ paths:
         クエリーに応じて、情報の取捨を行う
         '/circles?circlename=ながれぼし'であれば「ながれぼし」を含むサークルを取得する
         '/circles?sortedby=circle_name'であればサークル名がソートされた状態で取得する
+      tags:
+        - サークル情報
     post:
       summary: サークル情報を登録する
       operationId: post-circles
       responses:
-        '200':
-          description: OK
-        '403':
-          description: Forbidden
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
       description: |-
         サークル情報を登録する
         フォーム要素、Jsonそれぞれ登録できる
@@ -61,6 +65,8 @@ paths:
             schema:
               $ref: '#/components/schemas/AddCircle'
         description: 登録に必要な情報
+      tags:
+        - サークル情報
   '/circles/{circle_id}':
     parameters:
       - schema:
@@ -79,6 +85,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Circle'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
         '404':
           description: Not Found
       operationId: get-circle_id-circles
@@ -87,10 +97,14 @@ paths:
       summary: サークルIDに該当するサークル情報を更新する
       operationId: put-circle_id-circles
       responses:
-        '200':
-          description: OK
-        '403':
-          description: Forbidden
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
       description: クエリパラメータのサークルIDに該当するサークル情報を更新する
       requestBody:
         content:
@@ -101,6 +115,8 @@ paths:
             schema:
               $ref: '#/components/schemas/AddCircle'
         description: 更新するサークル情報
+      tags:
+        - サークル情報
   '/circles/{circle_id}/products':
     parameters:
       - schema:
@@ -110,7 +126,8 @@ paths:
         required: true
     get:
       summary: サークルIDに該当する商品情報を取得する
-      tags: []
+      tags:
+        - サークル情報
       responses:
         '200':
           description: OK
@@ -120,26 +137,58 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Product'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
         '404':
           description: Not Found
       operationId: get-circles-products
       description: クエリパラメータのサークルIDに合致するサークルの商品情報を取得する
       parameters: []
     post:
-      summary: 商品情報を登録する
+      summary: サークルの商品情報を登録する
       operationId: post-circles-products
       responses:
-        '200':
-          description: OK
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+      tags:
+        - サークル情報
+      description: サークルの商品情報を登録する
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddProduct'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AddProduct'
   /users:
     get:
       summary: ユーザー情報を取得する
-      tags: []
+      tags:
+        - User
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
         '400':
           description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
       operationId: get-user
       parameters:
         - schema:
@@ -152,6 +201,7 @@ paths:
           in: query
           name: user_email
           description: ユーザーEmailアドレスでの部分一致を行うクエリ
+      description: ユーザー情報を取得する
     post:
       summary: ユーザー情報を登録する
       operationId: post-user
@@ -160,8 +210,12 @@ paths:
           description: Created
         '400':
           description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
       parameters: []
-      description: ''
+      description: ユーザー情報を登録する
       requestBody:
         content:
           application/json:
@@ -170,6 +224,12 @@ paths:
               properties:
                 user_name:
                   type: string
+                added_user_id:
+                  type: integer
+                  description: 追加処理を行うユーザーのID 管理者ユーザー以外が行おうとしたときに401に設定
+              required:
+                - user_name
+                - added_user_id
         description: ''
     parameters: []
   '/users/{user_id}':
@@ -185,13 +245,30 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
       operationId: get-users-user_id
+      description: ''
     put:
       summary: ユーザIDに該当する情報を更新する
       operationId: put-users-user_id
       responses:
-        '200':
-          description: OK
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
   '/users/{user_id}/orders':
     parameters:
       - schema:
@@ -205,13 +282,39 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    order_id:
+                      type: integer
+                    order_quantity:
+                      type: integer
+                  required:
+                    - order_id
+                    - order_quantity
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
       operationId: get-users-user_id-products
     post:
       summary: 注文情報を登録する
       operationId: post-users-user_id-orders
       responses:
-        '200':
-          description: OK
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
   '/orders/{order_id}':
     parameters:
       - schema:
@@ -220,15 +323,155 @@ paths:
         in: path
         required: true
     get:
-      summary: Your GET endpoint
+      summary: 注文IDに該当する注文情報を取得する
       tags: []
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  order_id:
+                    type: integer
+                  order_quantity:
+                    type: integer
+                required:
+                  - order_id
+                  - order_quantity
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
       operationId: get-orders-order_id
+      description: 注文IDに該当する注文情報を取得する
     put:
-      summary: ''
+      summary: 注文IDに該当する注文情報を更新する
       operationId: put-orders-order_id
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+      description: 注文IDに該当する注文情報を更新する
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                order_id:
+                  type: integer
+                order_quantity:
+                  type: number
+              required:
+                - order_id
+                - order_quantity
+        description: ''
+  /login:
+    get:
+      summary: ログイン時のユーザー情報取得
+      operationId: get-login
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+      description: ログイン時にメールアドレスからユーザーIDやグループ情報などを取得する
+      parameters:
+        - schema:
+            type: string
+            format: email
+            pattern: '^[a-zA-Z0-9_.+-]+@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$'
+          in: query
+          name: email
+          description: ログインユーザーのemailアドレス
+          required: true
+  /products:
+    get:
+      summary: 商品情報を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+      operationId: get-products
+      description: 取得できる商品情報を取得する
+    post:
+      summary: 商品情報を登録する
+      operationId: post-products
+      responses:
+        '200':
+          description: OK
+  '/products/{product_id}':
+    parameters:
+      - schema:
+          type: string
+        name: product_id
+        in: path
+        required: true
+    get:
+      summary: 商品IDに該当する商品情報を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+      operationId: get-products-product_id
+    put:
+      summary: 商品IDに該当する商品情報を取得する
+      operationId: put-products-product_id
+      responses:
+        '200':
+          description: OK
+  '/products/{product_id}/orders':
+    parameters:
+      - schema:
+          type: string
+        name: product_id
+        in: path
+        required: true
+    get:
+      summary: 商品IDが該当する注文情報を取得する
+      tags: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+      operationId: get-products-product_id-orders
+    post:
+      summary: 商品IDが該当する商品情報を登録する
+      operationId: post-products-product_id-orders
       responses:
         '200':
           description: OK
@@ -236,27 +479,35 @@ components:
   schemas:
     Circle:
       title: Circle
-      x-stoplight:
-        id: baocaujh0tuex
       type: object
-      x-examples: {}
+      description: サークル情報取得用モデル
       properties:
         circle_id:
           type: integer
+          description: サークルID
         artist_name:
           type: string
+          description: 作家名
         circle_name:
           type: string
+          description: サークル名
         day:
           type: string
+          description: 開催日（N日目のN）
         hole:
           type: string
+          description: 開催ホール
         block:
           type: string
+          description: ブロック
         space_num:
           type: integer
+          description: スペースナンバー
         desk:
           type: string
+          description: 机
+        group_id:
+          type: integer
       required:
         - circle_id
         - artist_name
@@ -268,80 +519,107 @@ components:
         - desk
     Product:
       title: Product
-      x-stoplight:
-        id: 9pkwmd5sauomw
       type: object
-      x-examples:
-        example-1:
-          product_name: string
-          price: 0
-          deadline: '2019-08-24T14:15:22Z'
+      description: 商品情報取得用モデル
       properties:
+        product_id:
+          type: integer
+          description: 商品ID
+        circle_id:
+          type: number
+          description: サークルID サークルと紐づく
         product_name:
           type: string
+          description: 商品名
         price:
           type: integer
+          description: 値段
         deadline:
           type: string
           format: date-time
-        product_id:
-          type: integer
-        group_id:
-          type: integer
-        circle_id:
-          type: number
+          description: 締切日
         lock_status:
+          type: boolean
+          description: ロック状態
+        lock_status_id:
           type: integer
+          description: ロック状態の種別 別途マスタ定義あり
         commission_type:
           type: integer
+          description: 手数料種別
         commission:
           type: integer
+          description: 手数料
+        amount:
+          type: integer
+          description: 在庫
+        group_id:
+          type: integer
       required:
+        - product_id
+        - circle_id
         - product_name
         - price
         - deadline
-        - product_id
-        - group_id
-        - circle_id
         - lock_status
+        - lock_status_id
         - commission_type
         - commission
+        - amount
+        - group_id
     User:
       title: User
-      x-stoplight:
-        id: 00s9trz5jjlqd
       type: object
+      description: ユーザー情報取得用モデル
       properties:
         user_id:
           type: integer
+          description: ユーザーID
         user_name:
           type: string
+          description: ユーザー名
         groups:
-          type: string
+          type: array
+          description: ユーザーが所属しているグループIDの一覧
+          items:
+            type: integer
       required:
         - user_id
         - user_name
         - groups
     AddCircle:
       title: AddCircle
-      x-stoplight:
-        id: i5ytulhctqec3
       type: object
+      description: サークル情報登録用モデル
       properties:
         circle_name:
           type: string
+          description: サークル名
         artist_name:
           type: string
+          description: 作家名
         day:
           type: string
+          description: 日付
         hole:
           type: string
+          description: ホール
         block:
           type: string
+          description: ブロック
         space_num:
           type: integer
+          description: スペース番号
         desk:
           type: string
+          description: 机
+          pattern: '^[a-b]$'
+        amount:
+          type: integer
+          description: 在庫
+        group_id:
+          type: integer
+          description: グループID
       required:
         - circle_name
         - artist_name
@@ -350,6 +628,52 @@ components:
         - block
         - space_num
         - desk
+        - amount
+        - group_id
+    AddProduct:
+      title: AddProduct
+      type: object
+      description: 商品情報登録用モデル
+      properties:
+        product_name:
+          type: string
+          description: 商品名
+        price:
+          type: string
+          description: 金額
+        deadline:
+          type: string
+          format: date-time
+          description: 締切日
+        commission_type:
+          type: integer
+          description: 手数料種別
+        commission:
+          type: integer
+          description: 手数料
+        amount:
+          type: integer
+          description: 在庫数
+        group_id:
+          type: integer
+          description: グループID
+      required:
+        - product_name
+        - price
+        - deadline
+        - commission_type
+        - commission
+        - amount
+        - group_id
+    GroupID:
+      title: GroupId
+      type: object
+      properties:
+        group_id:
+          type: integer
+          description: グループID 一致するもののみ抜き出す
+      required:
+        - group_id
   requestBodies: {}
   responses: {}
   parameters: {}
