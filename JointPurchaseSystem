@@ -1,0 +1,578 @@
+openapi: 3.0.0
+x-stoplight:
+  id: elgc5qizwgvjs
+info:
+  title: JointPurchaseSystem2
+  version: '1.0'
+  description: サークル購買システムAPI
+  contact:
+    name: YamadaTakuma
+    email: sakikun0327@gmail.com
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /users:
+    get:
+      summary: ユーザー情報を取得する
+      tags:
+        - ユーザー情報
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: User
+                type: object
+                description: ''
+                x-examples:
+                  Alice Smith:
+                    id: 142
+                    firstName: Alice
+                    lastName: Smith
+                    email: alice.smith@gmail.com
+                    dateOfBirth: '1997-10-31'
+                    emailVerified: true
+                    signUpDate: '2019-08-24'
+                properties:
+                  user_id:
+                    type: string
+                  user_name:
+                    type: string
+                  groups:
+                    type: array
+                    items:
+                      type: string
+                required:
+                  - user_id
+                x-tags:
+                  - ユーザー情報
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+      operationId: get-users
+      description: ユーザー情報を取得する
+    parameters: []
+  '/users/{user_id}':
+    get:
+      summary: ユーザー個別の情報を取得する
+      tags:
+        - ユーザー情報
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: User
+                type: object
+                description: ''
+                x-examples:
+                  Alice Smith:
+                    id: 142
+                    firstName: Alice
+                    lastName: Smith
+                    email: alice.smith@gmail.com
+                    dateOfBirth: '1997-10-31'
+                    emailVerified: true
+                    signUpDate: '2019-08-24'
+                properties:
+                  user_id:
+                    type: string
+                  user_name:
+                    type: string
+                  groups:
+                    type: array
+                    items:
+                      type: string
+                required:
+                  - user_id
+                x-tags:
+                  - ユーザー情報
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+      operationId: get-users-single
+      description: ユーザー情報を取得する
+    parameters:
+      - schema:
+          type: string
+          format: idn-email
+        name: user_id
+        in: path
+        required: true
+        description: ユーザーのログインID（メールアドレス）
+    patch:
+      summary: ※後回し　ユーザーの個別情報を更新する
+      operationId: patch-users-user_id
+      responses:
+        '200':
+          description: OK
+      description: |-
+        ※今回は開発者で登録する可能性が高い？
+        ユーザーの個別情報を更新する
+      tags:
+        - ユーザー情報
+  '/users/{user_id}/{group_id}/orders':
+    parameters:
+      - schema:
+          type: string
+        name: user_id
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: group_id
+        in: path
+        required: true
+    get:
+      summary: ユーザーのオーダー情報を取得する
+      tags:
+        - 注文情報
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      operationId: get-users-orders
+      description: 指定されたユーザーIDのユーザーのオーダー情報を取得する
+  '/groups/{group_id}':
+    parameters:
+      - schema:
+          type: integer
+        name: group_id
+        in: path
+        required: true
+        description: グループ識別ID
+    get:
+      summary: 個別のグループ情報を取得する
+      operationId: get-groups
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: Group
+                x-stoplight:
+                  id: oc0sq5sttpv96
+                type: object
+                properties:
+                  group_id:
+                    type: string
+                  group_name:
+                    type: string
+                  users:
+                    type: array
+                    items:
+                      type: string
+                  administrators:
+                    type: array
+                    items:
+                      type: string
+                required:
+                  - group_id
+                  - group_name
+                  - users
+                  - administrators
+                x-tags:
+                  - グループ情報
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      tags:
+        - グループ情報
+      description: 個別のグループ情報を取得する
+    post:
+      summary: ※後回し　個別のグループ情報を登録する
+      operationId: post-groups-group_id
+      responses:
+        '200':
+          description: OK
+      tags:
+        - グループ情報
+      description: |-
+        ※今回は開発者側で登録する可能性が高い
+        個別のグループ情報を登録する
+  '/circles/{group_id}':
+    parameters:
+      - schema:
+          type: string
+        name: group_id
+        in: path
+        required: true
+    get:
+      summary: サークル情報を取得する
+      operationId: get-circles
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      tags:
+        - サークル情報
+      description: サークル情報を取得する
+    post:
+      summary: ※後回し　サークル情報を登録する
+      operationId: post-circles-group_id
+      responses:
+        '200':
+          description: OK
+      tags:
+        - サークル情報
+      description: |
+        ※今回は開発者側で登録する可能性が高い
+        サークル情報を登録する
+  '/circles/{group_id}/{circle_id}':
+    parameters:
+      - schema:
+          type: string
+        name: group_id
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: circle_id
+        in: path
+        required: true
+    get:
+      summary: サークル個別情報を取得する
+      tags:
+        - サークル情報
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      operationId: get-circles-single
+      description: 指定されたサークルIdのサークルの情報を取得する
+    patch:
+      summary: ※後回し　サークル個別情報を更新する
+      operationId: patch-circles-group_id-circle_id
+      responses:
+        '200':
+          description: OK
+      tags:
+        - サークル情報
+      description: |-
+        ※今回は開発者側で追加する可能性が高い
+        サークル個別情報を更新する
+  '/circles/{group_id}/{circle_id}/orders':
+    parameters:
+      - schema:
+          type: string
+        name: group_id
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: circle_id
+        in: path
+        required: true
+    get:
+      summary: サークル個別の注文情報を取得する
+      tags:
+        - 注文情報
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      operationId: get-circles-orders
+      description: 指定されたサークルIDのサークルの注文情報を取得する
+  '/circles/{group_id}/{circle_id}/products':
+    parameters:
+      - schema:
+          type: string
+        name: group_id
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: circle_id
+        in: path
+        required: true
+    get:
+      summary: サークル個別の商品情報を取得する
+      tags:
+        - 商品情報
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      operationId: get-circles-products
+      description: サークルIDに紐づく商品情報を取得する
+  '/products/{group_id}':
+    parameters:
+      - schema:
+          type: string
+        name: group_id
+        in: path
+        required: true
+    get:
+      summary: 商品情報を取得する
+      tags:
+        - 商品情報
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      operationId: get-products
+      description: 商品情報を取得する
+    post:
+      summary: 商品情報を登録する
+      operationId: post-products-group_id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      tags:
+        - 商品情報
+      description: 商品情報を登録する
+  '/products/{group_id}/{product_id}':
+    parameters:
+      - schema:
+          type: string
+        name: group_id
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: product_id
+        in: path
+        required: true
+    get:
+      summary: 個別の商品情報を取得する
+      tags:
+        - 商品情報
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      operationId: get-products-single
+      description: 商品IDに紐づく商品情報を取得する
+    patch:
+      summary: 個別の商品情報を更新する
+      operationId: patch-products-group_id-product_id
+      responses:
+        '200':
+          description: OK
+      description: 個別の商品情報を更新する
+      tags:
+        - 商品情報
+  '/orders/{group_id}':
+    parameters:
+      - schema:
+          type: string
+        name: group_id
+        in: path
+        required: true
+    get:
+      summary: 注文情報を取得する
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      operationId: get-orders
+      tags:
+        - 注文情報
+      description: 注文情報を取得する
+    post:
+      summary: 注文情報を取得する
+      operationId: post-orders-group_id
+      responses:
+        '200':
+          description: OK
+      tags:
+        - 注文情報
+      description: 注文情報を取得する
+  '/orders/{group_id}/{order_id}':
+    parameters:
+      - schema:
+          type: string
+        name: group_id
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: order_id
+        in: path
+        required: true
+    get:
+      summary: 個別の注文情報を取得する
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      operationId: get-orders-single
+      tags:
+        - 注文情報
+      description: 注文IDに紐づく個別の注文情報を取得する
+    patch:
+      summary: 個別の注文情報を更新する
+      operationId: patch-orders-group_id-order_id
+      responses:
+        '200':
+          description: OK
+      description: 個別の注文情報を更新する
+      tags:
+        - 注文情報
+components:
+  schemas:
+    User:
+      title: User
+      type: object
+      description: ''
+      x-examples:
+        Alice Smith:
+          id: 142
+          firstName: Alice
+          lastName: Smith
+          email: alice.smith@gmail.com
+          dateOfBirth: '1997-10-31'
+          emailVerified: true
+          signUpDate: '2019-08-24'
+      properties:
+        user_id:
+          type: string
+        user_name:
+          type: string
+        groups:
+          type: array
+          items:
+            type: string
+      required:
+        - user_id
+      x-tags:
+        - ユーザー情報
+    Group:
+      title: Group
+      x-stoplight:
+        id: oc0sq5sttpv96
+      type: object
+      properties:
+        group_id:
+          type: string
+        group_name:
+          type: string
+        users:
+          type: array
+          items:
+            type: string
+        administrators:
+          type: array
+          items:
+            type: string
+      required:
+        - group_id
+        - group_name
+        - users
+        - administrators
+      x-tags:
+        - グループ情報
+  securitySchemes: {}
+tags:
+  - name: グループ情報
+  - name: サークル情報
+  - name: ユーザー情報
+  - name: 商品情報
+  - name: 注文情報
