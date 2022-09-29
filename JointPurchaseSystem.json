@@ -31,7 +31,7 @@
                     "description": "ユーザー情報モデル",
                     "properties": {
                       "user_id": {
-                        "type": "integer"
+                        "type": "string"
                       },
                       "user_name": {
                         "type": "string"
@@ -181,7 +181,7 @@
                   ],
                   "properties": {
                     "user_id": {
-                      "type": "integer"
+                      "type": "string"
                     },
                     "user_name": {
                       "type": "string"
@@ -880,6 +880,13 @@
             },
             "in": "query",
             "name": "page"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "circle_id"
           }
         ]
       },
@@ -1234,6 +1241,34 @@
             },
             "in": "query",
             "name": "limit"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "user_id"
+          },
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "group_id"
+          },
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "circle_id"
+          },
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "product_id"
           }
         ]
       },
@@ -1477,7 +1512,7 @@
         ],
         "properties": {
           "user_id": {
-            "type": "integer"
+            "type": "string"
           },
           "user_name": {
             "type": "string"
