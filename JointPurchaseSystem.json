@@ -12,9 +12,9 @@
     }
   ],
   "paths": {
-    "/users": {
+    "/user": {
       "get": {
-        "summary": "ユーザー情報を全件取得する",
+        "summary": "ユーザー情報を取得する",
         "tags": [
           "ユーザー情報"
         ],
@@ -24,29 +24,26 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "title": "User",
-                    "type": "object",
-                    "description": "ユーザー情報モデル",
-                    "properties": {
-                      "user_id": {
-                        "type": "string"
-                      },
-                      "user_name": {
-                        "type": "string"
-                      },
-                      "groups": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
-                      }
+                  "title": "User",
+                  "type": "object",
+                  "description": "ユーザー情報モデル",
+                  "properties": {
+                    "user_id": {
+                      "type": "string"
                     },
-                    "required": [
-                      "user_id"
-                    ]
-                  }
+                    "user_name": {
+                      "type": "string"
+                    },
+                    "groups": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "user_id"
+                  ]
                 }
               }
             }
@@ -148,57 +145,13 @@
           },
           "description": "登録するユーザー情報"
         }
-      }
-    },
-    "/users/{user_id}": {
-      "get": {
-        "summary": "ユーザーIDに合致するユーザー情報を取得する",
-        "tags": [
-          "ユーザー情報"
-        ],
+      },
+      "patch": {
+        "summary": "ユーザー情報を更新する",
+        "operationId": "patch-users",
         "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "User",
-                  "type": "object",
-                  "description": "ユーザー情報モデル",
-                  "x-examples": {
-                    "Alice Smith": {
-                      "id": 142,
-                      "firstName": "Alice",
-                      "lastName": "Smith",
-                      "email": "alice.smith@gmail.com",
-                      "dateOfBirth": "1997-10-31",
-                      "emailVerified": true,
-                      "signUpDate": "2019-08-24"
-                    }
-                  },
-                  "x-tags": [
-                    "ユーザー情報"
-                  ],
-                  "properties": {
-                    "user_id": {
-                      "type": "string"
-                    },
-                    "user_name": {
-                      "type": "string"
-                    },
-                    "groups": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "required": [
-                    "user_id"
-                  ]
-                }
-              }
-            }
+          "204": {
+            "description": "No Content"
           },
           "400": {
             "description": "Bad Request"
@@ -208,45 +161,9 @@
           },
           "403": {
             "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
           }
         },
-        "operationId": "get-users-single",
-        "description": "ユーザーIDに合致するユーザー情報を取得する",
-        "parameters": []
-      },
-      "parameters": [
-        {
-          "schema": {
-            "type": "string",
-            "format": "idn-email"
-          },
-          "name": "user_id",
-          "in": "path",
-          "required": true,
-          "description": "ユーザーのログインID（メールアドレス）"
-        }
-      ],
-      "patch": {
-        "summary": "ユーザーIDに合致するユーザー情報を更新する",
-        "operationId": "patch-users-single",
-        "responses": {
-          "202": {
-            "description": "Accepted"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "404": {
-            "description": "Not Found"
-          }
-        },
-        "description": "ユーザーIDに合致するユーザー情報を更新する",
+        "description": "ユーザー情報を更新する",
         "tags": [
           "ユーザー情報"
         ],
@@ -256,19 +173,24 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "user_name": {
-                    "type": "string"
+                  "user_id": {
+                    "format": "email",
+                    "description": "ユーザーID（メールアドレス）",
+                    "type": "integer"
                   },
-                  "groups": {
-                    "type": "array",
-                    "items": {
-                      "type": "integer"
-                    }
+                  "user_name": {
+                    "type": "string",
+                    "description": "ユーザー名"
                   }
-                }
+                },
+                "required": [
+                  "user_id",
+                  "user_name"
+                ]
               }
             }
-          }
+          },
+          "description": "登録するユーザー情報"
         }
       }
     },
@@ -350,8 +272,8 @@
         "summary": "グループIDに合致するグループ情報を更新する",
         "operationId": "patch-groups-single",
         "responses": {
-          "200": {
-            "description": "OK"
+          "204": {
+            "description": "No Content"
           },
           "400": {
             "description": "Bad Request"
@@ -373,13 +295,21 @@
                   "users": {
                     "type": "array",
                     "items": {
-                      "type": "integer"
-                    }
-                  },
-                  "administrators": {
-                    "type": "array",
-                    "items": {
-                      "type": "integer"
+                      "type": "object",
+                      "properties": {
+                        "user_id": {
+                          "type": "string"
+                        },
+                        "auth": {
+                          "type": "integer"
+                        },
+                        "commision": {
+                          "type": "integer"
+                        },
+                        "commision_type": {
+                          "type": "integer"
+                        }
+                      }
                     }
                   },
                   "group_name": {
@@ -389,21 +319,21 @@
               }
             }
           },
-          "description": "グループ内のユーザーの情報と管理者一覧、グループ名を更新できる"
+          "description": "グループ内のユーザーの情報とグループ名を更新できる"
         },
         "tags": [
           "グループ情報"
         ]
       }
     },
-    "/groups/{group_id}/circles": {
+    "/circles": {
       "parameters": [
         {
           "schema": {
             "type": "string"
           },
           "name": "group_id",
-          "in": "path",
+          "in": "query",
           "required": true
         }
       ],
@@ -600,14 +530,14 @@
         }
       }
     },
-    "/groups/{group_id}/circles/{circle_id}": {
+    "/circles/{circle_id}": {
       "parameters": [
         {
           "schema": {
             "type": "string"
           },
           "name": "group_id",
-          "in": "path",
+          "in": "query",
           "required": true
         },
         {
@@ -717,8 +647,8 @@
         "summary": "グループIDとサークルIDに一致するサークル情報を更新する",
         "operationId": "patch-circles-single",
         "responses": {
-          "200": {
-            "description": "OK"
+          "204": {
+            "description": "No Content"
           }
         },
         "tags": [
@@ -785,14 +715,14 @@
         "description": "グループIDとサークルIDに一致するサークル情報を削除する"
       }
     },
-    "/groups/{group_id}/products": {
+    "/products": {
       "parameters": [
         {
           "schema": {
             "type": "string"
           },
           "name": "group_id",
-          "in": "path",
+          "in": "query",
           "required": true
         }
       ],
@@ -987,14 +917,14 @@
         }
       }
     },
-    "/groups/{group_id}/products/{product_id}": {
+    "/products/{product_id}": {
       "parameters": [
         {
           "schema": {
             "type": "string"
           },
           "name": "group_id",
-          "in": "path",
+          "in": "query",
           "required": true
         },
         {
@@ -1092,8 +1022,8 @@
         "summary": "グループIDと商品IDに一致する商品情報を更新する",
         "operationId": "patch-products-single",
         "responses": {
-          "200": {
-            "description": "OK"
+          "204": {
+            "description": "No Content"
           },
           "400": {
             "description": "Bad Request"
@@ -1176,14 +1106,14 @@
         "description": "グループIDと商品IDに一致する商品情報を削除する"
       }
     },
-    "/groups/{group_id}/orders": {
+    "/orders": {
       "parameters": [
         {
           "schema": {
             "type": "string"
           },
           "name": "group_id",
-          "in": "path",
+          "in": "query",
           "required": true
         }
       ],
@@ -1378,14 +1308,14 @@
         }
       }
     },
-    "/groups/{group_id}/orders/{order_id}": {
+    "/orders/{order_id}": {
       "parameters": [
         {
           "schema": {
             "type": "string"
           },
           "name": "group_id",
-          "in": "path",
+          "in": "query",
           "required": true
         },
         {
@@ -1481,8 +1411,8 @@
         "summary": "グループIDと注文IDに一致する注文情報を更新する",
         "operationId": "patch-orders-single",
         "responses": {
-          "200": {
-            "description": "OK"
+          "204": {
+            "description": "No Content"
           },
           "400": {
             "description": "Bad Request"
@@ -1542,8 +1472,8 @@
         "summary": "グループIDと注文IDに一致する注文情報を削除する",
         "operationId": "delete-orders-single",
         "responses": {
-          "200": {
-            "description": "OK"
+          "204": {
+            "description": "No Content"
           }
         },
         "tags": [
