@@ -128,8 +128,8 @@
                 "properties": {
                   "user_id": {
                     "format": "email",
-                    "description": "ユーザーID（メールアドレス）",
-                    "type": "integer"
+                    "description": "ユーザーID",
+                    "type": "string"
                   },
                   "user_name": {
                     "type": "string",
@@ -175,8 +175,8 @@
                 "properties": {
                   "user_id": {
                     "format": "email",
-                    "description": "ユーザーID（メールアドレス）",
-                    "type": "integer"
+                    "description": "ユーザーID",
+                    "type": "string"
                   },
                   "user_name": {
                     "type": "string",
